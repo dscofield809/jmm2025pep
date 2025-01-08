@@ -15,3 +15,5 @@ Push = upload
 Commit = save point
 
 Remember: **enter a commit message!**
+
+You can see all your codespaces at <https://github.com/codespaces>.
