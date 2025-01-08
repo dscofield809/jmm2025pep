@@ -15,3 +15,5 @@ Push = upload
 Commit = save point
 
 Remember: **enter a commit message!**
+
+Commit without syncing: your change only lives on codespace, not on GitHub.com
