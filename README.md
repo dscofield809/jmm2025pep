@@ -9,3 +9,9 @@ Sample repository from JMM 2025 Seattle
 Here is a link: <https://www.markdownguide.org/cheat-sheet/>.
 
 Super Duper Spork!
+
+Pull = download
+Push = upload
+Commit = save point
+
+Remember: **enter a commit message!**
