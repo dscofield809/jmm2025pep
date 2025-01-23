@@ -27,7 +27,7 @@
     <div id="prompt"></div>
     <button onclick="classify('A')">Classify as A</button>
     <button onclick="classify('B')">Classify as B</button>
-    <div id="plot"></div>
+    <canvas id="plot" width="500" height="500"></canvas>
 
     <script>
         let points = [];
@@ -60,22 +60,44 @@
         }
 
         function plotPoints() {
-            const plot = document.getElementById('plot');
-            plot.innerHTML = '';
-            points.forEach((point, index) => {
-                const pointDiv = document.createElement('div');
-                pointDiv.className = 'point';
-                pointDiv.style.left = `${point.x}px`;
-                pointDiv.style.top = `${point.y}px`;
-                pointDiv.style.backgroundColor = classifications[index] === 'A' ? 'red' : 'blue';
-                plot.appendChild(pointDiv);
+            const canvas = document.getElementById('plot');
+            const ctx = canvas.getContext('2d');
 
-                const labelDiv = document.createElement('div');
-                labelDiv.className = 'label';
-                labelDiv.style.left = `${point.x + 15}px`;
-                labelDiv.style.top = `${point.y}px`;
-                labelDiv.innerText = classifications[index];
-                plot.appendChild(labelDiv);
+            // Clear the canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Draw grid lines
+            ctx.strokeStyle = '#e0e0e0';
+            for (let i = 0; i <= 500; i += 5) {
+                ctx.beginPath();
+                ctx.moveTo(i, 0);
+                ctx.lineTo(i, 500);
+                ctx.stroke();
+                ctx.beginPath();
+                ctx.moveTo(0, i);
+                ctx.lineTo(500, i);
+                ctx.stroke();
+            }
+
+            // Draw x-axis and y-axis
+            ctx.strokeStyle = '#000000';
+            ctx.beginPath();
+            ctx.moveTo(0, 250);
+            ctx.lineTo(500, 250);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo(250, 0);
+            ctx.lineTo(250, 500);
+            ctx.stroke();
+
+            // Plot points
+            points.forEach((point, index) => {
+                ctx.fillStyle = classifications[index] === 'A' ? 'red' : 'blue';
+                ctx.beginPath();
+                ctx.arc(point.x * 5, 500 - point.y * 5, 5, 0, 2 * Math.PI);
+                ctx.fill();
+                ctx.fillStyle = '#000000';
+                ctx.fillText(classifications[index], point.x * 5 + 10, 500 - point.y * 5);
             });
         }
 
