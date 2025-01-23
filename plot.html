@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plot Coordinates</title>
+    <style>
+        #plot {
+            width: 500px;
+            height: 500px;
+            border: 1px solid black;
+            position: relative;
+        }
+        .point {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+        .label {
+            position: absolute;
+            transform: translate(-50%, -50%);
+        }
+    </style>
+</head>
+<body>
+    <div id="prompt"></div>
+    <button onclick="classify('A')">Classify as A</button>
+    <button onclick="classify('B')">Classify as B</button>
+    <div id="plot"></div>
+
+    <script>
+        let points = [];
+        let classifications = [];
+        let currentPoint = 0;
+
+        function getRandomCoordinate() {
+            return {
+                x: Math.floor(Math.random() * 500),
+                y: Math.floor(Math.random() * 500)
+            };
+        }
+
+        function displayPrompt() {
+            if (currentPoint < 3) {
+                const point = getRandomCoordinate();
+                points.push(point);
+                document.getElementById('prompt').innerText = `Classify point (${point.x}, ${point.y}) as A or B`;
+            } else {
+                plotPoints();
+            }
+        }
+
+        function classify(label) {
+            if (currentPoint < 3) {
+                classifications.push(label);
+                currentPoint++;
+                displayPrompt();
+            }
+        }
+
+        function plotPoints() {
+            const plot = document.getElementById('plot');
+            plot.innerHTML = '';
+            points.forEach((point, index) => {
+                const pointDiv = document.createElement('div');
+                pointDiv.className = 'point';
+                pointDiv.style.left = `${point.x}px`;
+                pointDiv.style.top = `${point.y}px`;
+                pointDiv.style.backgroundColor = classifications[index] === 'A' ? 'red' : 'blue';
+                plot.appendChild(pointDiv);
+
+                const labelDiv = document.createElement('div');
+                labelDiv.className = 'label';
+                labelDiv.style.left = `${point.x + 15}px`;
+                labelDiv.style.top = `${point.y}px`;
+                labelDiv.innerText = classifications[index];
+                plot.appendChild(labelDiv);
+            });
+        }
+
+        displayPrompt();
+    </script>
+</body>
+</html>
