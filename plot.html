@@ -27,6 +27,8 @@
     <div id="prompt"></div>
     <button onclick="classify('A')">Classify as A</button>
     <button onclick="classify('B')">Classify as B</button>
+    <br>
+    <br>
     <canvas id="plot" width="500" height="500"></canvas>
 
     <script>
@@ -68,7 +70,7 @@
 
             // Draw grid lines
             ctx.strokeStyle = '#e0e0e0';
-            for (let i = 0; i <= 500; i += 5) {
+            for (let i = 0; i <= 500; i += 50) {
                 ctx.beginPath();
                 ctx.moveTo(i, 0);
                 ctx.lineTo(i, 500);
@@ -82,13 +84,27 @@
             // Draw x-axis and y-axis
             ctx.strokeStyle = '#000000';
             ctx.beginPath();
-            ctx.moveTo(0, 250);
-            ctx.lineTo(500, 250);
+            ctx.moveTo(0, 500);
+            ctx.lineTo(500, 500);
             ctx.stroke();
             ctx.beginPath();
-            ctx.moveTo(250, 0);
-            ctx.lineTo(250, 500);
+            ctx.moveTo(0, 0);
+            ctx.lineTo(0, 500);
             ctx.stroke();
+
+            // Add labels for x-axis
+            ctx.fillStyle = '#000000';
+            ctx.font = '12px Arial';
+            for (let i = 0; i <= 100; i += 10) {
+                //ctx.fillText(i, i * 5, 510);
+                ctx.fillText(i, i*5+4, 495);
+            }
+             // Add labels for y-axis
+            // ctx.fillStyle = '#000000';
+            // ctx.font = '12px Arial';
+            for (let i = 10; i <= 100; i += 10) { // start at 10 because origin already labeled
+                ctx.fillText(i, 5, 500-(i*5+4));
+            }
 
             // Plot points
             points.forEach((point, index) => {
